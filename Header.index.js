@@ -2,117 +2,71 @@
 import './index.css'
 import {Component} from 'react'
 
-class LoginForm extends Component {
-  state = {
-    username: '',
-    password: '',
-    showErrorMessage: false,
-    errorMessage: '',
-  }
-  onChangeUserName = event => {
-    this.setState({username: event.target.value})
-  }
-  onChangePassword = event => {
-    this.setState({password: event.target.value})
-  }
-
-  submitForm = async event => {
-    event.preventDefault()
-    const {username, password} = this.state
-    const userDetails = {username, password}
-    const url = 'https://apis.ccbp.in/login'
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(userDetails),
-    }
-    const response = await fetch(url, options)
-    const fetchedData = await response.json()
-
-    if (response.ok === true) {
-      this.submitSuccess()
-    } else {
-      this.setState({
-        errorMessage: fetchedData.error_msg,
-        showErrorMessage: true,
-      })
-    }
-  }
-  submitSuccess = () => {
-    const {history} = this.props
-    history.replace('/')
-  }
-  renderUsername = () => {
-    const {username} = this.state
-    return (
-      <>
-        <label htmlFor="username" className="label-text">
-          Username
-        </label>
-        <input
-          type="text"
-          placeholder="Username"
-          id="username"
-          className="user-input"
-          value={username}
-          onChange={this.onChangeUserName}
-        />
-      </>
-    )
-  }
-  renderPassword = () => {
-    const {password} = this.state
-    return (
-      <>
-        <label htmlFor="password" className="label-text">
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          className="user-input"
-          value={password}
-          onChange={this.onChangePassword}
-        />
-      </>
-    )
-  }
+class Header extends Component {
   render() {
-    const {showErrorMessage, errorMessage} = this.state
     return (
-      <div className="login-form-container">
-        <div className="image-container">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
-            className="login-website-logo-mobile-image"
-            alt="website logo"
-          />
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-login-img.png"
-            className="login-image"
-            alt="website login"
-          />
-        </div>
-        <div className="login-container">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
-            className="login-website-logo-desktop-image"
-            alt="website logo"
-          />
-          <form className="form-container" onClick={this.submitForm}>
-            <div className="input-container">{this.renderUsername()}</div>
-            <div className="input-container">{this.renderPassword()}</div>
-            <button type="submit" className="loging-button">
-              Login
+      <div className="header-container">
+        <div className="nav-bar-container">
+          <div className="nav-bar-mobile-container">
+            <img
+              className="website-logo"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
+              alt="website logo"
+            />
+            <button type="button" className="nav-mobile-btn">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-log-out-img.png"
+                alt="nav logout"
+                className="nav-bar-image"
+              />
             </button>
-            {showErrorMessage && (
-              <p className="error-message">*{errorMessage}</p>
-            )}
-          </form>
+          </div>
+          <div className="nav-bar-desktop-container">
+            <img
+              className="website-logo"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
+              alt="website logo"
+            />
+            <div className="nav-bar-desktop-container-logo">
+              <ul className="nav-menu-items-list">
+                <li className="nav-menu-item">Home</li>
+                <li className="nav-menu-item">Products</li>
+                <li className="nav-menu-item">Cart</li>
+              </ul>
+              <button type="button" className="logout-desktop-btn">
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="mobile-nav-menu">
+          <ul className="mobile-nav-items">
+            <li className="mobile-nav-item">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-icon.png"
+                alt="nav home"
+                className="nav-bar-image"
+              />
+            </li>
+            <li className="mobile-nav-item">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-products-icon.png"
+                alt="nav products"
+                className="nav-bar-image"
+              />
+            </li>
+            <li className="mobile-nav-item">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
+                alt="nav cart"
+                className="nav-bar-image"
+              />
+            </li>
+          </ul>
         </div>
       </div>
     )
   }
 }
 
-export default LoginForm
+export default Header
